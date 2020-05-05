@@ -114,7 +114,7 @@ def export_csv(historical_records, checked_dates):
             positive = record.get("positive", 0)
             negative = record.get("negative", 0)
             death = record.get("death", 0)
-            total_tested = record["totalTestResults"]
+            total_tested = record.get("totalTestResults", 0)
 
             # Assign defaults instead of None
             if date_checked is None:

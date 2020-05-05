@@ -33,6 +33,12 @@ def get_ratio(value, prev):
 
     return prev, ratio
 
+def valid(value):
+    if value is None:
+        return 0
+    if not value:
+        return 0
+    return value
 
 def export_csv(historical_records):
     fields = ["Time", "positive", "negative", "death", "tests", "positive difference", "negative difference",
@@ -44,10 +50,11 @@ def export_csv(historical_records):
     prev_test = 0
     for record in historical_records:
         date_checked = datetime.strptime(record["dateChecked"], '%Y-%m-%dT%H:%M:%SZ')
-        positive = record["positive"]
-        negative = record["negative"]
-        death = record["death"]
-        total_tested = record["totalTestResults"]
+
+        positive = valid(record.get("positive", 0))
+        negative = valid(record.get("negative", 0))
+        death = valid(record.get("death", 0))
+        total_tested = valid(record.get("totalTestResults", 0))
 
         if date_checked is None:
             continue
